@@ -6,78 +6,80 @@ name: Build and deploy JAR app to Azure Web App - BetaSolutions
 on:
   push:
     branches:
-      - master
-  workflow_dispatch:
+      - master  # Kør workflow ved push til master-branchen
+  workflow_dispatch:  # Tillad manuel kørsel af workflow
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Kør jobbet på den seneste Ubuntu maskine
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # Tjek koden ud fra repository
 
       - name: Set up Java version
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4  # Sæt op til at bruge Java
         with:
-          java-version: '17'
-          distribution: 'microsoft'
+          java-version: '17'  # Specificer Java version 17
+          distribution: 'microsoft'  # Brug Microsofts distribution af Java
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install  # Byg projektet med Maven og generer JAR-filer med Maven
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4  # Upload bygget artifact til senere jobs
         with:
-          name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          name: java-app  # artifactens navn
+          path: '${{ github.workspace }}/target/*.jar'  # Stien til de genererede JAR-filer er jeg ret sikker på 
 
   qodana:
-    runs-on: ubuntu-latest
-    needs: build
+    runs-on: ubuntu-latest  # Kør jobbet på den seneste Ubuntu maskine
+    needs: build  # Afhænger af at "build"-jobbet er fuldført
     permissions:
-      contents: write
-      pull-requests: write
-      checks: write
+      contents: write  # Tillad at skrive til repository-indhold
+      pull-requests: write  # Tillad at skrive til pull-requests
+      checks: write  # Tillad at skrive checks
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3  # Tjek koden ud fra repository
         with:
-          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
-          fetch-depth: 0  # a full history is required for pull request analysis
+          ref: ${{ github.event.pull_request.head.sha }}  # Tjek pull request commit ud, ikke merge-commit
+          fetch-depth: 0  # Få en fuld historik til analyse med Qodana
+
       - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@v2024.2
+        uses: JetBrains/qodana-action@v2024.2  # Brug Qodana til kodekvalitetsanalyse
         with:
-          pr-mode: false
+          pr-mode: false  # Deaktiver PR-mode for Qodana ? som jeg ikke ved hvad er 
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_2024005869 }}
-          QODANA_ENDPOINT: 'https://qodana.cloud'
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_2024005869 }}  # Token til Qodana-autentificering
+          QODANA_ENDPOINT: 'https://qodana.cloud'  # Endpoint til Qodana-tjenesten
 
   deploy:
-    runs-on: ubuntu-latest
-    needs: qodana
+    runs-on: ubuntu-latest  # Kør jobbet på den seneste Ubuntu maskine
+    needs: qodana  # Afhænger af at "qodana"-jobbet er fuldført
     environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      name: 'Production'  # Sæt miljøet til produktion
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}  # URL til den deployede app
     permissions:
-      id-token: write #This is required for requesting the JWT
-  
+      id-token: write  # Tillad skrivning af ID-token til Azure-autentificering
+
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4  # Download artifact fra tidligere build-job
         with:
-          name: java-app
-      
+          name: java-app  # artifactens navn, som blev uploadet tidligere
+
       - name: Login to Azure
-        uses: azure/login@v2
+        uses: azure/login@v2  # Log ind på Azure med credentials
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02EE231649674041B04901E6C1B85AB1 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6E6EF6D90354C2BB56B113F32D73B35 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_791930235922473484BCD7BE15515CCF }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02EE231649674041B04901E6C1B85AB1 }}  # Azure-klient ID
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6E6EF6D90354C2BB56B113F32D73B35 }}  # Azure-tenant ID
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_791930235922473484BCD7BE15515CCF }}  # Azure-subscription ID
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp  # Sæt et ID for dette trin til reference
+        uses: azure/webapps-deploy@v3  # Deploy til en Azure Web App
         with:
-          app-name: 'BetaSolutions'
-          slot-name: 'Production'
-          package: '*.jar'
-          
+          app-name: 'BetaSolutions'  # Navn på Azure Web App
+          slot-name: 'Production'  # Deploy til produktions-slot på Azure som er den slot den senste version er på. 
+          package: '*.jar'  # Specificer pakken, der skal deployes (JAR-filen):
+          # En JAR-fil "Java ARchive" er en filtype som bruges til at pakke Java programmer og deres afhængigheder i én enkelt fil..
