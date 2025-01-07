@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest  # Kør jobbet på den seneste Ubuntu maskine
+    # Ubuntu er et Linux-baseret operativsystem der bruges her som en virtuel maskine til at køre vores jobs.
 
     steps:
       - uses: actions/checkout@v4  # Tjek koden ud fra repository
@@ -23,7 +24,7 @@ jobs:
           distribution: 'microsoft'  # Brug Microsofts distribution af Java
 
       - name: Build with Maven
-        run: mvn clean install  # Byg projektet med Maven og generer JAR-filer med Maven
+        run: mvn clean install  # Byg projektet med Maven og generer JAR-filer med Maven som forklares i bunden. 
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4  # Upload bygget artifact til senere jobs
@@ -32,8 +33,8 @@ jobs:
           path: '${{ github.workspace }}/target/*.jar'  # Stien til de genererede JAR-filer er jeg ret sikker på 
 
   qodana:
-    runs-on: ubuntu-latest  # Kør jobbet på den seneste Ubuntu maskine
-    needs: build  # Afhænger af at "build"-jobbet er fuldført
+    runs-on: ubuntu-latest  # se overstående 
+    needs: build  # Afhænger af at "build" jobbet er fuldført
     permissions:
       contents: write  # Tillad at skrive til repository-indhold
       pull-requests: write  # Tillad at skrive til pull-requests
@@ -54,7 +55,7 @@ jobs:
           QODANA_ENDPOINT: 'https://qodana.cloud'  # Endpoint til Qodana-tjenesten
 
   deploy:
-    runs-on: ubuntu-latest  # Kør jobbet på den seneste Ubuntu maskine
+    runs-on: ubuntu-latest  # se overstående 
     needs: qodana  # Afhænger af at "qodana"-jobbet er fuldført
     environment:
       name: 'Production'  # Sæt miljøet til produktion
