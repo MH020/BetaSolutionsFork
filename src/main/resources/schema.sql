@@ -111,13 +111,13 @@ CREATE TABLE IF NOT EXISTS project_employee_task_subTask (
 -- Insert sample data into project table
 INSERT INTO project (project_name, project_owner, project_total_hours, project_total_days, project_total_price, project_deadline, project_start_date, project_active)
 VALUES
-    ('Project A', 'Owner 1', 500, 30, 10000.0, '2024-12-31', '2024-11-01', TRUE),
-    ('Project B', 'Owner 2', 300, 20, 8000.0, '2025-01-15', '2024-12-01', TRUE);
+    ('Car dealership', 'Suzan', 500, 30, 10000.0, '2025-01-31', '2024-11-01', TRUE),
+    ('Pizza system', 'Mads', 300, 20, 8000.0, '2025-01-15', '2024-12-01', TRUE);
 -- Insert sample data into sub_project table
 INSERT INTO sub_project (sub_project_name, sub_project_total_hours, sub_project_total_days, sub_project_total_price, sub_project_deadline, sub_project_start_date, project_id, sub_project_active)
 VALUES
-    ('SubProject 1', 200, 15, 5000.0, '2024-12-15', '2024-11-05', 1, TRUE),
-    ('SubProject 2', 100, 10, 3000.0, '2025-01-05', '2024-12-10', 2, TRUE);
+    ('Rent a car', 200, 15, 5000.0, '2024-12-15', '2024-11-05', 1, TRUE),
+    ('', 100, 10, 3000.0, '2025-01-05', '2024-12-10', 2, TRUE);
 
 -- Insert sample data into task table
 INSERT INTO task (task_name, task_total_hours, task_hours, task_total_days,task_days, task_total_price, task_deadline, task_start_date, project_id, sub_project_id, task_active)
