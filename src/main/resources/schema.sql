@@ -117,28 +117,34 @@ VALUES
 INSERT INTO sub_project (sub_project_name, sub_project_total_hours, sub_project_total_days, sub_project_total_price, sub_project_deadline, sub_project_start_date, project_id, sub_project_active)
 VALUES
     ('Rent a car', 200, 15, 5000.0, '2024-12-15', '2024-11-05', 1, TRUE),
-    ('', 100, 10, 3000.0, '2025-01-05', '2024-12-10', 2, TRUE);
+    ('Create menu', 100, 10, 3000.0, '2025-01-05', '2024-12-10', 2, TRUE);
 
 -- Insert sample data into task table
 INSERT INTO task (task_name, task_total_hours, task_hours, task_total_days,task_days, task_total_price, task_deadline, task_start_date, project_id, sub_project_id, task_active)
 VALUES
-    ('Task 1', 100, 50, 10, 5, 2000.0, '2024-12-10', '2024-11-01', 1, 1, TRUE),
-    ('Task 2', 50, 40, 5, 4, 1000.0, '2024-12-25', '2024-11-10', 2, 2, TRUE);
+    ('Select a car', 100, 50, 10, 5, 2000.0, '2024-12-10', '2024-11-01', 1, 1, TRUE),
+    ('Create a pizza', 50, 40, 5, 4, 1000.0, '2024-12-25', '2024-11-10', 2, 2, TRUE);
 
 -- Insert sample data into sub_task table
 INSERT INTO sub_task (sub_task_name, sub_task_total_hours, sub_task_total_days, sub_task_total_price, sub_task_deadline, sub_task_start_date, task_id, sub_task_active)
 VALUES
-    ('SubTask 1', 20, 3, 500.0, '2024-12-03', '2024-11-10', 1, TRUE),
-    ('SubTask 2', 10, 2, 300.0, '2024-12-18', '2024-11-15', 2, TRUE);
+    ('Insert car information', 20, 3, 500.0, '2024-12-03', '2024-11-10', 1, TRUE),
+    ('Insert pizza information', 10, 2, 300.0, '2024-12-18', '2024-11-15', 2, TRUE);
 
 -- Insert sample data into employee table
 INSERT INTO employee (employee_name, employee_office, employee_proficiency, employee_salary)
 VALUES
-    ('Employee 1', 'Office 1', 'Developer', 5000.0),
-    ('Employee 2', 'Office 2', 'Designer', 4000.0),
-    ('Employee 3', 'Office 3', 'Tester', 3000.0),
-    ('Employee 4', 'Office 4', 'Manager', 6000.0),
-    ('Employee 5', 'Office 5', 'Developer', 5500.0);
+    ('Mads', 'Copenhagen', 'Manager', 6000.0),
+    ('Caroline', 'Copenhagen', 'Developer', 5000.0),
+    ('Karl', 'Copenhagen', 'Designer', 4000.0),
+
+    ('Oscar', 'New Jersey', 'Tester', 3000.0),
+    ('Lucy', 'New Jersey', 'Designer', 4000.0),
+
+    ('John', 'Dallas', 'Manager', 6000.0),
+
+    ('Suzan', 'Los Angeles', 'Manager', 6000.0),
+    ('Lauren', 'Los Angeles', 'Developer', 5500.0);
 
 -- Insert sample data into profile table
 INSERT INTO profile (password, email, employee_id)
