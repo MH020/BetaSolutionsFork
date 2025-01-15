@@ -23,16 +23,17 @@ public class ProjectRepository extends AssignmentRepository {
     }
 
     //Create method
-    // Insert project into project table with the projectOwner.which is still completely nuts to me.
+    // Insert project into project table with the projectOwner
     public int insertAssignmentIntoTable(Project project) {
-        String sql = "INSERT INTO project (project_Name, project_Total_Hours, project_Total_Days, project_Total_Price, project_Deadline, project_Start_Date, project_Owner) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO project (project_Name, project_Total_Hours, project_Total_Days, " +
+                "project_Total_Price, project_Deadline, project_Start_Date, project_Owner) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = super.insertAssignmentIntoTable(project, sql);
         try {
-            preparedStatement.setString(7, project.getProjectOwner());//set projectowner.
+            preparedStatement.setString(7, project.getProjectOwner()); //set projectowner.
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                return resultSet.getInt("project_ID");//return objectID.
+                return resultSet.getInt("project_ID"); //return objectID.
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +41,6 @@ public class ProjectRepository extends AssignmentRepository {
 
         return 0;//if failed
     }
-    //update
 
 
     //Read method
