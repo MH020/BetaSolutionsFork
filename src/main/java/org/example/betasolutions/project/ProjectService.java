@@ -23,7 +23,7 @@ public class ProjectService {
         //calculate variables:
         TimeManager timeManager = new TimeManager();
         Date startDate = Date.valueOf(LocalDate.now());
-        int hours = 12;
+        int hours = 0;
         int days = timeManager.calculateDays(hours);
         Date deadline = timeManager.calculateEndDate(startDate, days);
 
