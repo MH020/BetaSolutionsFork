@@ -1,6 +1,8 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
+# HVIS filen ikke er indenteret korrekt, kører den slet ikke.
+
 name: Build and deploy JAR app to Azure Web App - BetaSolutions
 
 on:
@@ -15,7 +17,7 @@ jobs:
     # Ubuntu er et Linux-baseret operativsystem der bruges her som en virtuel maskine til at køre vores jobs.
 
     steps:
-      - uses: actions/checkout@v4  # Tjek koden ud fra repository
+      - uses: actions/checkout@v4  # Tjek koden ud fra GitHub repository
 
       - name: Set up Java version
         uses: actions/setup-java@v4  # Sæt op til at bruge Java
@@ -64,6 +66,7 @@ jobs:
     permissions:
       id-token: write  # Tillad at skrive ID-tokens til Azure authentification.
 
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4  # Download artifact fra tidligere build-job. hente JAR-fil(er?)
@@ -71,7 +74,7 @@ jobs:
           name: java-app  # artifactens navn, som blev uploadet tidligere
 
       - name: Login to Azure
-        uses: azure/login@v2  # Log ind på Azure med credentials
+        uses: azure/login@v2  # Log ind på Azure med credentials/secrets
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02EE231649674041B04901E6C1B85AB1 }}  # Azure-klient ID
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6E6EF6D90354C2BB56B113F32D73B35 }}  # Azure-tenant ID
@@ -84,5 +87,5 @@ jobs:
           app-name: 'BetaSolutions'  # Navn på Azure Web App
           slot-name: 'Production'  # Deploy til produktions-slot på Azure som er den slot den senste version er på. 
           package: '*.jar'  # Specificer pakken, der skal deployes (JAR-filen):
-
           # En JAR-fil "Java ARchive" er en filtype som bruges til at pakke Java programmer og deres afhængigheder i én enkelt fil..
+
