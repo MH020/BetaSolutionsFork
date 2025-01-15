@@ -3,9 +3,12 @@ package org.example.betasolutions.project;
 import org.example.betasolutions.BudgetManager;
 import org.example.betasolutions.FactoryInterface;
 import org.example.betasolutions.ModelInterface;
+import org.example.betasolutions.TimeManager;
 import org.example.betasolutions.subProject.SubProject;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,7 +20,20 @@ public class ProjectService {
     }
 
     public void insertAssignmentIntoTable(Project project){
-        //updateProjectTotalHours(project.getID());
+        //calculate variables:
+        TimeManager timeManager = new TimeManager();
+        Date startDate = Date.valueOf(LocalDate.now());
+        int hours = 12;
+        int days = timeManager.calculateDays(hours);
+        Date deadline = timeManager.calculateEndDate(startDate, days);
+
+        //set variables on project:
+        project.setStartDate(startDate);
+        project.setTotalHours(hours);
+        project.setTotalDays(days);
+        project.setDeadline(deadline);
+
+        //add project on database:
         projectRepository.insertAssignmentIntoTable(project);
     }
     public List<Project> readAllProjects(){
