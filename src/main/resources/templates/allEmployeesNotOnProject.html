@@ -15,8 +15,8 @@ it shows a list of all employees and also gives the user the option to create ne
         <h1><span class="beta">Beta</span><span class="solutions">Solutions</span></h1>
     </a>
 
-    <form class="logo" method="get" th:action="@{/login}" style="display:inline;">
-        <button type="submit">Log out</button>
+    <form class="logo" method="get" th:action="@{/login}" style="display:inline;"> <!-- knappen leder tilbage til login siden og returnerer loginsiden -->
+        <button type="submit">Log out</button> <!-- log out button -->
     </form>
 </header>
 <h2>Employees</h2>
@@ -35,16 +35,15 @@ it shows a list of all employees and also gives the user the option to create ne
     </tr>
     </thead>
     <tbody>
-    <tr th:each="employee : ${allEmployees}">
+    <tr th:each="employee : ${allEmployees}"> <!-- for hver employee i allEmployees / employee bliver brugt hele vejen ned -->
         <td th:text="${employee.getEmployeeName()}"></td>
         <td th:text="${employee.getEmployeeProficiency()}"></td>
         <td th:text="${employee.getEmployeeOffice()}"></td>
         <td>
-            <form method="post" th:action="@{/project/{id}/employee/add/project(id=${id})}" th:object="${employee}"> <!--  -->
-                <!-- Include employeeID as a hidden field -->
+            <form method="post" th:action="@{/project/{id}/employee/add/project(id=${id})}" th:object="${employee}"> <!-- id bliver indtaget i EmployeeController -->
 
+                <!-- Include employeeID as a hidden field -->
                 <input type="hidden" name="employeeID" id="employeeID" th:value="${employee.employeeID}"/>
-                <!-- Include projectID (replace with dynamic projectID if applicable) -->
 
                 <button type="submit">Add to Project</button>
             </form>

@@ -1,6 +1,8 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
+# HVIS filen ikke er indenteret korrekt, kører den slet ikke.
+
 name: Build and deploy JAR app to Azure Web App - BetaSolutions
 
 on:
@@ -15,7 +17,7 @@ jobs:
     # Ubuntu er et Linux-baseret operativsystem der bruges her som en virtuel maskine til at køre vores jobs.
 
     steps:
-      - uses: actions/checkout@v4  # Tjek koden ud fra repository
+      - uses: actions/checkout@v4  # Tjek koden ud fra GitHub repository
 
       - name: Set up Java version
         uses: actions/setup-java@v4  # Sæt op til at bruge Java
@@ -41,7 +43,7 @@ jobs:
       checks: write  # Tillad at skrive checks
 
     steps:
-      - uses: actions/checkout@v3  # Tjek koden ud fra repository
+      - uses: actions/checkout@v3  # Tjek koden ud fra GitHub repository
         with:
           ref: ${{ github.event.pull_request.head.sha }}  # Tjek pull request commit ud, ikke merge-commit
           fetch-depth: 0  # Få en fuld historik til analyse med Qodana
@@ -61,7 +63,7 @@ jobs:
       name: 'Production'  # Sæt miljøet til produktion
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}  # URL til den deployede app
     permissions:
-      id-token: write  # Tillad skrivning af ID-token til Azure-autentificering
+      id-token: write # Tillad skrivning af ID-token til Azure-autentificering
 
     steps:
       - name: Download artifact from build job
@@ -70,7 +72,7 @@ jobs:
           name: java-app  # artifactens navn, som blev uploadet tidligere
 
       - name: Login to Azure
-        uses: azure/login@v2  # Log ind på Azure med credentials
+        uses: azure/login@v2  # Log ind på Azure med credentials/secrets
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02EE231649674041B04901E6C1B85AB1 }}  # Azure-klient ID
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6E6EF6D90354C2BB56B113F32D73B35 }}  # Azure-tenant ID
