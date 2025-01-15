@@ -38,9 +38,9 @@ public class EmployeeController {
     //read
     @GetMapping("/employees")
     public String getAllEmployees(Model model) {
-        List<Employee> employees = employeeService.getAllEmployees();
-        System.out.println(employees.size());
-        model.addAttribute("allEmployees", employees);
+        List<Employee> employees = employeeService.getAllEmployees(); //get employees
+        //System.out.println(employees.size());
+        model.addAttribute("allEmployees", employees); //add all employees to thymeleaf
         return "employeepage";
     }
 

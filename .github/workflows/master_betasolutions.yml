@@ -24,48 +24,49 @@ jobs:
           distribution: 'microsoft'  # Brug Microsofts distribution af Java
 
       - name: Build with Maven
-        run: mvn clean install  # Byg projektet med Maven og generer JAR-filer med Maven som forklares i bunden. 
+        run: mvn clean install  # Byg projektet med Maven. Generer JAR-filer med Maven (forklares i bunden).
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4  # Upload bygget artifact til senere jobs
+        uses: actions/upload-artifact@v4  # Upload bygget artifact til senere jobs (artifact = JAR fil?)
         with:
           name: java-app  # artifactens navn
-          path: '${{ github.workspace }}/target/*.jar'  # Stien til de genererede JAR-filer er jeg ret sikker på 
+          path: '${{ github.workspace }}/target/*.jar'  #  Stien til de genererede JAR-filer?
+                                                        #  '${{}}' is a github variable.
 
   qodana:
     runs-on: ubuntu-latest  # se overstående 
     needs: build  # Afhænger af at "build" jobbet er fuldført
     permissions:
-      contents: write  # Tillad at skrive til repository-indhold
-      pull-requests: write  # Tillad at skrive til pull-requests
+      contents: write  # Tillad at skrive til repository-indhold (kode)
+      pull-requests: write  # Tillad at skrive pull-requests
       checks: write  # Tillad at skrive checks
 
     steps:
-      - uses: actions/checkout@v3  # Tjek koden ud fra repository
+      - uses: actions/checkout@v3  # Tjek koden ud fra GitHub-repository
         with:
-          ref: ${{ github.event.pull_request.head.sha }}  # Tjek pull request commit ud, ikke merge-commit
-          fetch-depth: 0  # Få en fuld historik til analyse med Qodana
+          ref: ${{ github.event.pull_request.head.sha }}  # Tjek pull request-commit ud. (Check ikke merge-commits ud)
+          fetch-depth: 0  # Få en fuld historik til analyse med Qodana.
 
-      - name: 'Qodana Scan'
+      - name: 'Qodana Scan' #Scan with qodana
         uses: JetBrains/qodana-action@v2024.2  # Brug Qodana til kodekvalitetsanalyse
         with:
-          pr-mode: false  # Deaktiver PR-mode for Qodana ? som jeg ikke ved hvad er 
+          pr-mode: false  # Deaktiver PR-mode(?) for Qodana
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_2024005869 }}  # Token til Qodana-autentificering
-          QODANA_ENDPOINT: 'https://qodana.cloud'  # Endpoint til Qodana-tjenesten
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_2024005869 }}  # Token til Qodana-autentificering. GitHub secrets.
+          QODANA_ENDPOINT: 'https://qodana.cloud'  # Endpoint til Qodana-tjenesten. Login.
 
   deploy:
     runs-on: ubuntu-latest  # se overstående 
     needs: qodana  # Afhænger af at "qodana"-jobbet er fuldført
     environment:
-      name: 'Production'  # Sæt miljøet til produktion
+      name: 'Production'  # Sæt Azure miljø til produktion
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}  # URL til den deployede app
     permissions:
-      id-token: write  # Tillad skrivning af ID-token til Azure-autentificering
+      id-token: write  # Tillad at skrive ID-tokens til Azure authentification.
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4  # Download artifact fra tidligere build-job
+        uses: actions/download-artifact@v4  # Download artifact fra tidligere build-job. hente JAR-fil(er?)
         with:
           name: java-app  # artifactens navn, som blev uploadet tidligere
 
@@ -83,4 +84,5 @@ jobs:
           app-name: 'BetaSolutions'  # Navn på Azure Web App
           slot-name: 'Production'  # Deploy til produktions-slot på Azure som er den slot den senste version er på. 
           package: '*.jar'  # Specificer pakken, der skal deployes (JAR-filen):
+
           # En JAR-fil "Java ARchive" er en filtype som bruges til at pakke Java programmer og deres afhængigheder i én enkelt fil..

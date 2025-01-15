@@ -2,7 +2,7 @@
 it shows a list of all employees and also gives the user the option to create new employees-->
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="https://www.thymeleaf.org">
+      xmlns:th="https://www.thymeleaf.org"><!-- link thymeleaf-->
 <head>
     <meta charset="UTF-8">
     <title>List of all employees</title>
@@ -10,21 +10,29 @@ it shows a list of all employees and also gives the user the option to create ne
 </head>
 
 <body>
+
 <header>
+    <!-- logo: -->
     <a th:href="@{/home}" class="logo">
-        <h1><span class="beta">Beta</span><span class="solutions">Solutions</span></h1>
+        <h1><span class="beta">Beta</span>
+            <span class="solutions">Solutions</span>
+        </h1>
     </a>
 
+    <!-- logout button -->
     <form class="logo" method="get" th:action="@{/login}" style="display:inline;">
         <button type="submit">Log out</button>
     </form>
 </header>
+
 <h2>Employees</h2>
+<!-- home button -->
 <form class="logo" method="get" th:action="@{/home}" style="display:inline;">
     <button type="submit">Home</button>
 </form>
 
-<form th:action="@{/employee/new}" th:object="${allEmployees}" method="get">
+<!-- go to new employee page -->
+<form th:action="@{/employee/new}" th:object="${allEmployees}" method="get"> <!-- th:object not used-->
     <button type="submit">Create new employee</button>
 </form>
 
