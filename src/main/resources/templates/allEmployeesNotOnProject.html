@@ -20,6 +20,7 @@ it shows a list of all employees and also gives the user the option to create ne
     </form>
 </header>
 <h2>Employees</h2>
+<!-- JAVASCRIPT -->
 <button onclick="history.back()" class="left-corner-button">Back</button> <!-- go back to previous page -->
 <br>
 <br>
@@ -39,8 +40,9 @@ it shows a list of all employees and also gives the user the option to create ne
         <td th:text="${employee.getEmployeeProficiency()}"></td>
         <td th:text="${employee.getEmployeeOffice()}"></td>
         <td>
-            <form method="post" th:action="@{/project/{id}/employee/add/project(id=${id})}" th:object="${employee}">
+            <form method="post" th:action="@{/project/{id}/employee/add/project(id=${id})}" th:object="${employee}"> <!--  -->
                 <!-- Include employeeID as a hidden field -->
+
                 <input type="hidden" name="employeeID" id="employeeID" th:value="${employee.employeeID}"/>
                 <!-- Include projectID (replace with dynamic projectID if applicable) -->
 
