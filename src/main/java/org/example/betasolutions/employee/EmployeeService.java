@@ -3,6 +3,7 @@ package org.example.betasolutions.employee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EmployeeService {
@@ -69,7 +70,7 @@ public class EmployeeService {
     public void deleteEmployee(int employeeID){
         employeeRepository.deleteEmployee(employeeID);
     }
-    public List<String> GetAllEmployeeOffices(){
+    public Set<String> GetAllEmployeeOffices(){
         return employeeRepository.GetAllEmployeeOffices();
     }
 }

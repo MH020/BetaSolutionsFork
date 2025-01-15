@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class EmployeeRepository {
@@ -297,12 +299,12 @@ public class EmployeeRepository {
             e.printStackTrace();
         }
     }
-    public List<String> GetAllEmployeeOffices() {
+    public Set<String> GetAllEmployeeOffices() {
         String sql = "SELECT employee_office FROM employee";
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<String> employeeOffices = new ArrayList<>();
+            Set<String> employeeOffices = new HashSet<>();
             while (resultSet.next()) {
                 String employeeOffice = resultSet.getString("employee_office");
                 employeeOffices.add(employeeOffice);
