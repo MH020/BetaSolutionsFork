@@ -56,7 +56,7 @@
             <td>
             <!-- Delete Project Button -->
             <form method="post" th:action="@{project/delete(project_id=${project.ID})}" style="display:inline;"> <!-- returns homepage -->
-                  onsubmit="return confirm('Are you sure you want to delete this project? this will course all SubProjects, task and subtasks under this project to also be deleted and this action is final');">
+                  onsubmit="return confirm('Are you sure you want to delete this project? This will cause all SubProjects, tasks and subtasks under this project to also be deleted.');">
                 <button type="submit" class="delete-button">Delete</button>
             </form>
             </td>
