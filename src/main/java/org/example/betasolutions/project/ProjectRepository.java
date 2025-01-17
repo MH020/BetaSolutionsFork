@@ -101,11 +101,11 @@ public class ProjectRepository extends AssignmentRepository {
         //get all tasks for project from database.
         List <ModelInterface> allTasks = super.readAllAssignmentsBelongingToProject("task", "task", Task::new, project.getID());
 
-        //for each task, add task total hours to total.
+        //for each task in project, add task total hours.
         for (ModelInterface modelInterface : allTasks){
             totalHours += super.getTableIntByInt("task", "task_hours", "task_id", modelInterface.getID());
         }
-        
+
         return totalHours;
     }
 

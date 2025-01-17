@@ -52,8 +52,8 @@ public class ProjectService {
         Project project = projectRepository.readProjectByID(projectID); //read project.
         int totalHours = projectRepository.getTotalHoursForProject(project);//get total hours
         updateProjectVariables(project, project.getStartDate(), totalHours); //update time variables on object.
-
         projectRepository.updateProject(project, projectID); //update on database.
+
         updateProjectPrice(totalHours, project);
     }
 
