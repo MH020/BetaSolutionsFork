@@ -12,6 +12,7 @@
         <h1><span class="beta">Beta</span><span class="solutions">Solutions</span></h1>
     </a>
 
+    <!-- log ud-->
     <form class="logo" method="get" th:action="@{/login}" style="display:inline;">
         <button type="submit">Log out</button>
     </form>
@@ -24,6 +25,7 @@
     <br>
 </h2>
 
+<!-- project info -->
 <aside class="right-corner">
     <h2>Start date: <span th:text="${project.getStartDate()}"></span></h2>
     <h2>Deadline: <span th:text="${project.getDeadline()}"></span></h2>
@@ -32,17 +34,20 @@
 </aside>
 
 <main>
+    <!-- knap til employee page -->
     <form class="logo left-corner" method="get" th:action="@{/project/{id}/employees (id=${projectID})}" style="display:inline;">
         <button type="submit" class="employees">Employees</button>
         <hidden name="projectID" field="projectID"> </hidden>
     </form>
     <br>
 
+    <!-- create task knap -->
     <h2><span class="project">Project</span> with <span class="taskunder">tasks</span></h2>
     <form th:action="@{/project/{projectID}/New/task(projectID=${project.getID()})}" method="get">
         <button type="submit" class="task">Create task</button>
     </form>
 
+    <!-- task uden subprojects -->
     <table>
         <tr>
             <th class="task">Task name</th>
@@ -55,7 +60,7 @@
             <th class="task"></th>
         </tr>
 
-        <!-- Loop through subprojects -->
+        <!-- Loop through tasks uden subprojects -->
         <tr th:each="task : ${tasksWithoutSubProject}">
             <td th:text="${task.name}"></td>
             <td th:text="${task.days}"></td>
