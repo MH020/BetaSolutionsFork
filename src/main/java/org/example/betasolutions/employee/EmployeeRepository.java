@@ -299,7 +299,7 @@ public class EmployeeRepository {
             e.printStackTrace();
         }
     }
-    public List<String> GetAllEmployeeOffices() {
+    public Set<String> GetAllEmployeeOffices() {
         String sql = "SELECT employee_office FROM employee";
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);

@@ -142,6 +142,10 @@ VALUES
 
     ('John', 'Dallas', 'Manager', 6000.0),
 
+    ('Bjørn', 'Oslo', 'Manager', 6000.0),
+
+    ('Suzan', 'Los Angeles', 'Manager', 6000.0),
+
     ('Lauren', 'Los Angeles', 'Developer', 5500.0);
 
 -- Insert sample data into profile table

@@ -112,6 +112,9 @@ public class Project implements ModelInterface {
         return projectTotalHours;
     }
 
+    public void setTotalDays(int totalDays){
+        this.projectTotalDays = projectTotalHours;
+    }
     public int getTotalDays() {
         return projectTotalDays;
     }

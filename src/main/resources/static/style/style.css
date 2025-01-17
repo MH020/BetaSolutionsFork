@@ -143,6 +143,7 @@ button {
     position: absolute;
     top: 200px; /* Adjust the top position as needed */
     left: 300px;
+
 }
 
 .right-corner {
@@ -160,4 +161,5 @@ button {
     position: absolute;
     top: 140px; /* Adjust the top position as needed */
     left: 450px;
+
 }
