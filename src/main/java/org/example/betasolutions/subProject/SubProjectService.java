@@ -1,12 +1,15 @@
 package org.example.betasolutions.subProject;
 
 import org.example.betasolutions.BudgetManager;
+import org.example.betasolutions.project.Project;
 import org.example.betasolutions.project.ProjectService;
 import org.example.betasolutions.TimeManager;
 
 import org.example.betasolutions.subTask.SubTask;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,6 +25,7 @@ public class SubProjectService {
     }
 
     public void insertIntoSubProject(SubProject subProject){
+        updateProjectVariables(subProject, Date.valueOf(LocalDate.now()),  0);
         //updateSubProjectTotalHours(subProject.getID(), 0);
         subProjectRepository.insertSubProject(subProject);
     }
@@ -61,5 +65,17 @@ public class SubProjectService {
         double price = budgetManager.calculateCost(hours);
 
         subProjectRepository.updateSubProjectPrice(subProject, price); //update on database.
+    }
+    public void updateProjectVariables(SubProject SubProject, Date startDate, int hours){
+        //calculate variables.
+        TimeManager timeManager = new TimeManager();
+        int days = timeManager.calculateDays(hours);
+        Date deadline = timeManager.calculateEndDate(startDate, days);
+
+        //set variables on project:
+        SubProject.setStartDate(startDate);
+        SubProject.setHours(hours);
+        SubProject.setDays(days);
+        SubProject.setDeadline(deadline);
     }
 }
