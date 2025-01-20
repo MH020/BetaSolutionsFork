@@ -72,9 +72,11 @@ public class Project implements ModelInterface {
 
     public void setTotalHours(int projectTotalHours) {
         this.projectTotalHours = projectTotalHours;
+        /*
         TimeManager timeManager = new TimeManager();
         projectTotalDays = timeManager.calculateDays(this.projectTotalHours);
         projectDeadline = timeManager.calculateEndDate(projectStartDate, this.projectTotalHours);
+         */
     }
 
     public int getHours() {
@@ -113,7 +115,7 @@ public class Project implements ModelInterface {
     }
 
     public void setTotalDays(int totalDays){
-        this.projectTotalDays = projectTotalHours;
+        this.projectTotalDays = totalDays;
     }
     public int getTotalDays() {
         return projectTotalDays;

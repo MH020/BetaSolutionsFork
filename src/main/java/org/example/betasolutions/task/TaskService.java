@@ -100,6 +100,7 @@ public class TaskService {
         calculateDeadline(task); //calculate days and deadline.
 
         taskRepository.updateTaskTotalHours (task.getID(), totalHours); //update task total hours on database.
+        taskRepository.updateTask(task);
         updateTaskPrice(totalHours, task); //update price on database.
 
         //update hours on project or subproject:

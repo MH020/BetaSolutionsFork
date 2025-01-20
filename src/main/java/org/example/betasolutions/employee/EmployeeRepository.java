@@ -304,10 +304,11 @@ public class EmployeeRepository {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             Set<String> employeeOffices = new HashSet<>();
-            while (resultSet.next()) {
-                String employeeOffice = resultSet.getString("employee_office");
-                employeeOffices.add(employeeOffice);
+            while (resultSet.next()) { //for each employee in employee
+                String employeeOffice = resultSet.getString("employee_office"); //get office
+                employeeOffices.add(employeeOffice); //add office to HashSet.
             }
             return employeeOffices;
         } catch (SQLException e) {

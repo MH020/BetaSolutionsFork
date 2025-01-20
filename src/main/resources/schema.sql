@@ -135,17 +135,17 @@ VALUES
 INSERT INTO employee (employee_name, employee_office, employee_proficiency, employee_salary)
 VALUES
     ('Mads', 'Copenhagen', 'Manager', 6000.0),
-    ('Caroline', 'Copenhagen', 'Developer', 5000.0),
-    ('Karl', 'Copenhagen', 'Designer', 4000.0),
 
     ('Oscar', 'New Jersey', 'Tester', 3000.0),
-    ('Lucy', 'New Jersey', 'Designer', 4000.0),
+
+    ('Lucy', 'Oslo', 'Designer', 4000.0),
 
     ('John', 'Dallas', 'Manager', 6000.0),
 
     ('Bjørn', 'Oslo', 'Manager', 6000.0),
 
     ('Suzan', 'Los Angeles', 'Manager', 6000.0),
+
     ('Lauren', 'Los Angeles', 'Developer', 5500.0);
 
 -- Insert sample data into profile table

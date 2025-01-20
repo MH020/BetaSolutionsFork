@@ -88,6 +88,7 @@ public class ProjectRepository extends AssignmentRepository {
             preparedStatement.setDate(6, project.getDeadline());
             preparedStatement.setDate(7, project.getStartDate());
             preparedStatement.setInt(8, projectID);
+            preparedStatement.executeUpdate();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,37 +99,13 @@ public class ProjectRepository extends AssignmentRepository {
     public int getTotalHoursForProject(Project project){
         int totalHours = 0;//project.getHours(); //get project hours.
 
-        //get all subprojects for project.
-        List<ModelInterface> allSubProjectsAndTasks = super.readAllAssignmentsBelongingToProject("sub_project", "sub_project", SubProject::new, project.getID());
-
-        //get all tasks for project.
+        //get all tasks for project from database.
         List <ModelInterface> allTasks = super.readAllAssignmentsBelongingToProject("task", "task", Task::new, project.getID());
 
+        //for each task in project, add task total hours.
         for (ModelInterface modelInterface : allTasks){
-            int subProjectID = super.getTableIntByInt("task", "sub_project_id", "task_id", modelInterface.getID());
-            int taskTotalHours = super.getTableIntByInt("task", "task_hours", "task_id", modelInterface.getID());
-            ((Task) modelInterface).setHours(taskTotalHours);
-            if (subProjectID <= 0){
-                allSubProjectsAndTasks.add(modelInterface);
-            }
+            totalHours += super.getTableIntByInt("task", "task_hours", "task_id", modelInterface.getID());
         }
-
-        //add task and subproject hours to total:
-        for (ModelInterface modelInterface : allSubProjectsAndTasks){
-
-            /*
-            //if task in subproject, skip:
-            if (modelInterface instanceof Task){
-                Task task = (Task) modelInterface;
-                if(task.getSubProjectID() < 0){
-                    continue;
-                }
-            } //'if (modelinterface instanceof Task)'*/
-
-
-            totalHours += modelInterface.getHours();
-
-        }//end of all modelInterfaces.
 
         return totalHours;
     }

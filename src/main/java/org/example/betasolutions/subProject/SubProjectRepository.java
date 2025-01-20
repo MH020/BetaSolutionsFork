@@ -2,6 +2,7 @@ package org.example.betasolutions.subProject;
 import org.example.betasolutions.ConnectionManager;
 import org.example.betasolutions.ModelInterface;
 import org.example.betasolutions.AssignmentRepository;
+import org.example.betasolutions.project.Project;
 import org.example.betasolutions.task.Task;
 import org.springframework.stereotype.Repository;
 
@@ -91,6 +92,26 @@ public class SubProjectRepository extends AssignmentRepository {
 
     public boolean updateSubProjectPrice(SubProject subProject, double price){
         return super.updateDouble("sub_project", "sub_project_total_price", subProject.getID(), price);
+    }
+
+    public boolean updateSubProject(SubProject subProject) {
+        String sql = "UPDATE sub_project SET sub_project_Name = ?, sub_project_Total_Hours = ?, sub_project_Total_Days = ?, sub_project_Total_Price = ?, sub_project_Deadline = ?, sub_project_Start_Date =? WHERE sub_project_ID = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, subProject.getName());
+            preparedStatement.setInt(2, subProject.getHours());
+            preparedStatement.setInt(3, subProject.getDays());
+            preparedStatement.setDouble(4, subProject.getTotalPrice());
+            preparedStatement.setDate(5, subProject.getDeadline());
+            preparedStatement.setDate(6, subProject.getStartDate());
+            preparedStatement.setInt(7, subProject.getID());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

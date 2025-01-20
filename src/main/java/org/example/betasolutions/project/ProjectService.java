@@ -13,17 +13,24 @@ import java.util.List;
 
 @Service
 public class ProjectService {
+    private final TimeManager timeManager;
     private ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository){
+    public ProjectService(ProjectRepository projectRepository, TimeManager timeManager){
         this.projectRepository = projectRepository;
+        this.timeManager = timeManager;
     }
 
     public void insertAssignmentIntoTable(Project project){
-        //calculate variables:
+        updateProjectVariables(project, Date.valueOf(LocalDate.now()),  0);
+
+        //add project on database:
+        projectRepository.insertAssignmentIntoTable(project);
+    }
+
+    public void updateProjectVariables(Project project, Date startDate, int hours){
+        //calculate variables.
         TimeManager timeManager = new TimeManager();
-        Date startDate = Date.valueOf(LocalDate.now());
-        int hours = 0;
         int days = timeManager.calculateDays(hours);
         Date deadline = timeManager.calculateEndDate(startDate, days);
 
@@ -32,9 +39,6 @@ public class ProjectService {
         project.setTotalHours(hours);
         project.setTotalDays(days);
         project.setDeadline(deadline);
-
-        //add project on database:
-        projectRepository.insertAssignmentIntoTable(project);
     }
     public List<Project> readAllProjects(){
        return projectRepository.readAllProjects();
@@ -49,10 +53,20 @@ public class ProjectService {
     public void updateProjectTotalHours(int projectID){
         Project project = projectRepository.readProjectByID(projectID); //read project.
         int totalHours = projectRepository.getTotalHoursForProject(project);//get total hours
-        project.setTotalHours(totalHours); //update object.
 
-        projectRepository.updateTotalHoursForProject(projectID, totalHours); //update database.
+        project.setTotalHours(totalHours); //try this ?
+        calculateDeadline(project); //and this ?
+
+        projectRepository.updateTotalHoursForProject(projectID,totalHours);
+        projectRepository.updateProjectPrice(project,project.getTotalHours());
+        //updateProjectVariables(project, project.getStartDate(), totalHours); //update time variables on object.
+        projectRepository.updateProject(project, projectID); //update on database.
         updateProjectPrice(totalHours, project);
+
+    }
+    public void calculateDeadline(Project project){
+        project.setTotalDays(timeManager.calculateDays(project.getHours()));
+        project.setDeadline(timeManager.calculateEndDate(project.getStartDate(), project.getDays()));
     }
 
     public void deleteProject(int project_id){

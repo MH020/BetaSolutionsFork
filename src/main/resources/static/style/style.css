@@ -142,7 +142,8 @@ button {
 .left-corner {
     position: absolute;
     top: 200px; /* Adjust the top position as needed */
-    left: 500px;
+    left: 300px;
+
 }
 
 .right-corner {
@@ -159,5 +160,6 @@ button {
 .left-corner-button {
     position: absolute;
     top: 140px; /* Adjust the top position as needed */
-    left: 500px;
+    left: 450px;
+
 }

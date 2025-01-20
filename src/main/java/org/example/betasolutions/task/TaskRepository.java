@@ -125,14 +125,19 @@ public class TaskRepository extends AssignmentRepository {
                 Task task = (Task) assignmentObject; //typecasting.
 
                 int subProjectID = super.getTableIntByInt("task", "sub_project_id", "task_id", task.getID()); //get subprojectID
+                //fix hours/totalhours + days/totaldays
+                int totalHours = task.getHours();
+                int totalDays = task.getDays();
                 int hours = super.getTableIntByInt("task", "task_hours", "task_id", task.getID()); //get hours
-                int totalHours = super.getTableIntByInt("task", "task_total_hours", "task_id", task.getID());
+                int days = super.getTableIntByInt("task", "task_days", "task_id", task.getID()); //get hours
 
-
-                //get total hours
                 task.setHours(hours); //set hours
                 task.setTotalHours(totalHours); //set total hours
+                task.setDays(days);
+                task.setTotalDays(totalDays);
+
                 task.setSubProjectID(subProjectID); //set subprojectID
+
                 taskList.add(task); //add task to tasklist.
             }
         }
@@ -229,6 +234,30 @@ public class TaskRepository extends AssignmentRepository {
         return super.updateDouble("task", "task_total_price", taskID, newPrice);
     }
 
+    public boolean updateTask(Task task){
+        String sql = "UPDATE task SET task_Name = ?, task_Total_Hours = ?, task_Total_Days = ?, task_Hours = ?, task_Days = ?, task_Total_Price = ?, task_Deadline = ?,task_Start_Date =? WHERE task_ID = ?";
+
+        try{
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, task.getName());
+            preparedStatement.setInt(2, task.getTotalHours());
+            preparedStatement.setInt(3, task.getTotalDays());
+            preparedStatement.setInt(4, task.getHours());
+            preparedStatement.setInt(5, task.getDays());
+            preparedStatement.setDouble(6, task.getTotalDays());
+            preparedStatement.setDate(7, task.getDeadline());
+            preparedStatement.setDate(8, task.getStartDate());
+            preparedStatement.setInt(9, task.getID());
+
+            preparedStatement.executeUpdate();
+            return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
 
 
 }
