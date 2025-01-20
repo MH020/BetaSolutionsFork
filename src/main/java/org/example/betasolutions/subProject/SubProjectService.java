@@ -46,9 +46,6 @@ public class SubProjectService {
         SubProject subProject = subProjectRepository.readSubProject(subProjectID); //read subproject.
         int totalHours = subProjectRepository.getTotalHoursForSubProject(subProject); //get totalHours.
 
-        //subProject.setHours(totalHours);//total hours.
-        //calculateDeadline(subProject);//update on object.
-
         updateProjectVariables(subProject, subProject.getStartDate(), totalHours); //set variables.
         updateSubProjectPrice(totalHours, subProject); //set total price.
 
