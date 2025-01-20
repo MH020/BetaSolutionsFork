@@ -13,10 +13,12 @@ import java.util.List;
 
 @Service
 public class ProjectService {
+    private final TimeManager timeManager;
     private ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository){
+    public ProjectService(ProjectRepository projectRepository, TimeManager timeManager){
         this.projectRepository = projectRepository;
+        this.timeManager = timeManager;
     }
 
     public void insertAssignmentIntoTable(Project project){
@@ -51,10 +53,20 @@ public class ProjectService {
     public void updateProjectTotalHours(int projectID){
         Project project = projectRepository.readProjectByID(projectID); //read project.
         int totalHours = projectRepository.getTotalHoursForProject(project);//get total hours
-        updateProjectVariables(project, project.getStartDate(), totalHours); //update time variables on object.
-        projectRepository.updateProject(project, projectID); //update on database.
 
+        project.setTotalHours(totalHours); //try this ?
+        calculateDeadline(project); //and this ?
+
+        projectRepository.updateTotalHoursForProject(projectID,totalHours);
+        projectRepository.updateProjectPrice(project,project.getTotalHours());
+        //updateProjectVariables(project, project.getStartDate(), totalHours); //update time variables on object.
+        projectRepository.updateProject(project, projectID); //update on database.
         updateProjectPrice(totalHours, project);
+
+    }
+    public void calculateDeadline(Project project){
+        project.setTotalDays(timeManager.calculateDays(project.getHours()));
+        project.setDeadline(timeManager.calculateEndDate(project.getStartDate(), project.getDays()));
     }
 
     public void deleteProject(int project_id){

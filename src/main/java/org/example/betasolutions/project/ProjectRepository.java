@@ -88,6 +88,7 @@ public class ProjectRepository extends AssignmentRepository {
             preparedStatement.setDate(6, project.getDeadline());
             preparedStatement.setDate(7, project.getStartDate());
             preparedStatement.setInt(8, projectID);
+            preparedStatement.executeUpdate();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
