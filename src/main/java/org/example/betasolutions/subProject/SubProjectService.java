@@ -62,6 +62,7 @@ public class SubProjectService {
     public void updateSubProjectPrice(int hours, SubProject subProject){
         BudgetManager budgetManager = new BudgetManager();
         double price = budgetManager.calculateCost(hours);
+        subProject.setTotalPrice(price);
 
         subProjectRepository.updateSubProjectPrice(subProject, price); //update on database.
     }
