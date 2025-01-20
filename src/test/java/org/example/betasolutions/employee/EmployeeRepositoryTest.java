@@ -50,18 +50,18 @@ class EmployeeRepositoryTest {
 
     @Test
     void createNewEmployee() {
-        int actual = employeeRepository.createNewEmployee(new Employee(1, "John Doe", "Office", "Proficient", "1000"));
-        int expected = 6;
-        assertEquals(expected, actual);
+        int actualID = employeeRepository.createNewEmployee(new Employee(1, "John Doe", "Office", "Proficient", "1000"));
+        int expectedID = 8;
+        assertEquals(expectedID, actualID);
     }
 
     @Test
     void getAllEmployees() {
         int actual = employeeRepository.getAllEmployees().size();
-        int expected = 5;
+        int expected = 7;
         assertEquals(expected, actual);
         String actualName = employeeRepository.getAllEmployees().get(0).getEmployeeName();
-        String expectedName = "Employee 1";
+        String expectedName = "Mads";
         assertEquals(expectedName, actualName);
     }
 
@@ -71,17 +71,17 @@ class EmployeeRepositoryTest {
         int expected = 1;
         assertEquals(expected, actual);
         String actualName = employeeRepository.getAllEmployeesForProject(1).get(0).getEmployeeName();
-        String expectedName = "Employee 1";
+        String expectedName = "Mads";
         assertEquals(expectedName, actualName);
     }
 
     @Test
     void getAllEmployeesNotOnProject() {
         int actual = employeeRepository.getAllEmployeesNotOnProject(1).size();
-        int expected = 4; //4 employees not assigned project 1.
+        int expected = 6; //4 employees not assigned project 1.
         assertEquals(expected, actual);
         String actualName = employeeRepository.getAllEmployeesNotOnProject(1).get(0).getEmployeeName();
-        String expectedName = "Employee 2";
+        String expectedName = "Oscar";
         assertEquals(expectedName, actualName);
 
     }
@@ -95,7 +95,7 @@ class EmployeeRepositoryTest {
         assertEquals(expectedSize, actualSize);
 
         //Test name for employee 1.
-        String expectedName = "Employee 1";
+        String expectedName = "Mads";
         String actualName = employeeList.get(0).getEmployeeName();
 
         assertEquals(expectedName, actualName);
@@ -129,7 +129,7 @@ class EmployeeRepositoryTest {
         assertEquals(expectedSize, actualSize);
 
         //Test name for employee 1.
-        String expectedName = "Employee 1";
+        String expectedName = "Mads";
         String actualName = employeeList.get(0).getEmployeeName();
 
         assertEquals(expectedName, actualName);

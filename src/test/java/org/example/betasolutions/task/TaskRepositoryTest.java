@@ -87,7 +87,7 @@ class TaskRepositoryTest {
     @Test
     void readAllTasksBelongingToProject() {
         List<Task> allTasksForProject = taskRepository.readAllTasksBelongingToProject(1);
-        String expectedName = "Task 1";
+        String expectedName = "Select a car";
         String actualName = allTasksForProject.get(0).getName(); //get name from first task in tasklist.
 
         assertEquals(expectedName, actualName);
@@ -104,7 +104,7 @@ class TaskRepositoryTest {
         assertEquals(expectedSize, actualSize);
 
 
-        String expectedName = "Task 1";
+        String expectedName = "Select a car";
         String actualName = allTasksForSubProject.get(0).getName();
         assertEquals(expectedName, actualName);
 

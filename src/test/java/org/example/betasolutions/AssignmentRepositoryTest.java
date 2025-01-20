@@ -76,7 +76,7 @@ class AssignmentRepositoryTest {
         assertNotNull(actualProjectList);
 
         String actualProjectName = actualProjectList.get(0).getName();
-        String expectedProjectName = "Project A";
+        String expectedProjectName = "Car dealership";
 
         assertEquals(expectedProjectName, actualProjectName);
         assertEquals(1, actualProjectList.get(0).getID());
@@ -136,7 +136,7 @@ class AssignmentRepositoryTest {
     @Test
     void getTableIntByString(){
         //get id by name ("Task 1")
-        int actualID = superRepository.getTableIntByString("task", "task_ID", "task_Name", "Task 1");
+        int actualID = superRepository.getTableIntByString("task", "task_ID", "task_Name", "Select a car");
         int expectedID = 1;
 
         assertEquals(expectedID, actualID);
@@ -153,23 +153,23 @@ class AssignmentRepositoryTest {
 
     @Test
     void getTableStringByString(){
-        String expectedProjectOwner = "Owner 1";
-        String actualProjectOwner = superRepository.getTableStringByString("project", "project_Owner", "project_Name", "Project A");
+        String expectedProjectOwner = "Suzan";
+        String actualProjectOwner = superRepository.getTableStringByString("project", "project_Owner", "project_Name", "Car dealership");
 
         assertEquals(expectedProjectOwner, actualProjectOwner); //verify projectOwner = owner 1
 
-        String expectedName = "Project A";
-        String actualName = superRepository.getTableStringByString("project", "project_Name", "project_Owner", "Owner 1");
-        assertEquals(expectedName, actualName );//verify actualName = "Project A"
+        String expectedName = "Car dealership";
+        String actualName = superRepository.getTableStringByString("project", "project_Name", "project_Owner", "Suzan");
+        assertEquals(expectedName, actualName );//verify actualName = "Car dealership"
     }
 
     @Test
     void getTableStringByInt(){
-        String expectedName = "Project A";
+        String expectedName = "Car dealership";
         String actualName = superRepository.getTableStringByInt("project", "project_Name", "project_ID", 1);
         assertEquals(expectedName, actualName); //verify projectName = Project A
 
-        String expectedProjectOwner = "Owner 1";
+        String expectedProjectOwner = "Suzan";
         String actualProjectOwner = superRepository.getTableStringByInt("project", "project_Owner", "project_ID", 1);
         assertEquals(expectedProjectOwner, actualProjectOwner); //verify projectOwner = "Owner 1"
     }

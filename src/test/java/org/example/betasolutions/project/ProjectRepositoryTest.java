@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,6 +59,7 @@ class ProjectRepositoryTest{
         //new project
         Project project = new Project("projectName", "projectOwner", 43,
                 500000.5, Date.valueOf("2024-12-02"));
+        project.setDeadline(Date.valueOf(LocalDate.now()));
 
         int actualID = projectRepository.insertAssignmentIntoTable(project); //insert project object into sql table.
         int expectedID = 3;
@@ -89,6 +91,8 @@ class ProjectRepositoryTest{
     @Test
     void createProject() {
         Project project = new Project ("name", "po", 1, 500.0, Date.valueOf("2024-12-16"));
+        project.setDeadline(Date.valueOf(LocalDate.now()));
+
         int expectedID = 3; //2 projects already exist.
         int actualID = projectRepository.insertAssignmentIntoTable(project); //method returns id of new project.
 
@@ -103,7 +107,7 @@ class ProjectRepositoryTest{
     void getTotalHoursForProject(){
         Project project = projectRepository.readProjectByID(1); // in this case project 1 has 200 hours.
         int actualHours = projectRepository.getTotalHoursForProject(project); //get total hours for project.
-        int expectedHours = 200; //expected hours.
+        int expectedHours = 50; //expected hours.
         assertEquals(actualHours, expectedHours);
     }
 
