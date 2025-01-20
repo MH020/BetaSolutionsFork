@@ -95,7 +95,7 @@ public class SubProjectRepository extends AssignmentRepository {
     }
 
     public boolean updateSubProject(SubProject subProject) {
-        String sql = "UPDATE subProject SET sub_project_Name = ?, sub_project_Total_Hours = ?, sub_project_Total_Days = ?, sub_project_Total_Price = ?, sub_project_Deadline = ?, sub_project_Start_Date =? WHERE sub_project_ID = ?";
+        String sql = "UPDATE sub_project SET sub_project_Name = ?, sub_project_Total_Hours = ?, sub_project_Total_Days = ?, sub_project_Total_Price = ?, sub_project_Deadline = ?, sub_project_Start_Date =? WHERE sub_project_ID = ?";
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
