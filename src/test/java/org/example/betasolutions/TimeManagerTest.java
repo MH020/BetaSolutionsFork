@@ -20,9 +20,19 @@ class   TimeManagerTest {
     @Test
     void calculateEndDate() {
         // this test will check if the end date is calculated correctly
-        Date actualDate= timeManager.calculateEndDate(Date.valueOf("2024-12-10"),2);
+
+        //arrange:
         Date exptedDate = Date.valueOf("2024-12-12");
+
+        Date startDate = Date.valueOf("2024-12-10");
+        int days = 2
+
+        //act:
+        Date actualDate= timeManager.calculateEndDate(startDate, days);
+
+        //assert:
         assertEquals(exptedDate,actualDate);
+
         // this date will check if the end date is calculated correctly when the end date is a weekend aka 14th of december is a saturday
         actualDate = timeManager.calculateEndDate(Date.valueOf("2024-12-13"),1);
         Date weekenDate = Date.valueOf("2024-12-16");
