@@ -25,7 +25,7 @@ class   TimeManagerTest {
         Date exptedDate = Date.valueOf("2024-12-12");
 
         Date startDate = Date.valueOf("2024-12-10");
-        int days = 2
+        int days = 2;
 
         //act:
         Date actualDate= timeManager.calculateEndDate(startDate, days);
